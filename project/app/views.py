@@ -23,6 +23,21 @@ def signup(request):
        
    return render(request, 'registration/signup.html')
 
+def login(request):
+   if request.method == 'POST':
+       username = request.POST['username']
+       password = request.POST['password']
+
+       user = auth.authenticate(username=username, password=password)
+
+       if user is not None:
+            auth.login(request, user)
+            return redirect('home')
+       error = "아이디 또는 비밀번호가 틀립니다"
+       return render(request, 'registration/login.html', {"error":error})
+        
+   return render(request, 'registration/login.html')
+
 def home(request):
    posts = Post.objects.all()
 
