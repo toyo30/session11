@@ -40,6 +40,10 @@ def home(request):
    return render(request, 'home.html', {'posts':posts})
 
 
+def logout(request):
+   auth.logout(request)
+   return redirect('home')
+
 def new(request):
    if request.method == "POST":
        title = request.POST['title']

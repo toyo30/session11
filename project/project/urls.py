@@ -27,5 +27,6 @@ urlpatterns = [
    path('delete-comment/<int:post_pk>/<int:comment_pk>', views.delete_comment, name='delete_comment'),
    path("registration/signup/", views.signup, name="signup"),
    path("registration/login/", views.login, name="login"),
+   path("registration/logout/", views.logout, name="logout"),
 ]
 
