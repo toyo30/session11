@@ -54,7 +54,9 @@ def new(request):
 
        new_post = Post.objects.create(
            title=title,
-           content=content)
+           content=content,
+           author=request.user
+           )
        return redirect('detail', new_post.pk)
   
    return render(request, 'new.html')
@@ -67,7 +69,8 @@ def detail(request, post_pk):
         content = request.POST['content']
         Comment.objects.create(
             post=post,
-            content=content
+            content=content,
+            author=request.user
         )
         return redirect('detail', post_pk);
 
