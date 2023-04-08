@@ -1,3 +1,4 @@
+from django.contrib import auth
 from django.contrib.auth.models import User
 from django.shortcuts import redirect, render
 
@@ -8,7 +9,16 @@ def signup(request):
    if request.method == 'POST':
        username = request.POST['username']
        password = request.POST['password']
-       User.objects.create_user(name=username, password=password)
+
+       exist_user = User.objects.filter(username=username)
+
+       if exist_user:
+            error = "이미 존재하는 유저입니다."
+            return render(request, 'registration/signup.html', {"error":error})
+       
+       new_user = User.objects.create_user(username=username, password=password)
+       auth.login(request, new_user)
+   
        return redirect('home')
        
    return render(request, 'registration/signup.html')
