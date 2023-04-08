@@ -1,4 +1,5 @@
 from django.contrib import auth
+from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
 from django.shortcuts import redirect, render
 
@@ -28,7 +29,7 @@ def login(request):
       user = auth.authenticate(username=username, password=password)
       if user is not None:
            auth.login(request, user)
-           return redirect('home')
+           return redirect(request.GET.get('next', '/'))
       error = "아이디 또는 비밀번호가 틀립니다"
       return render(request, 'registration/login.html', {"error":error})
         
@@ -44,6 +45,7 @@ def logout(request):
    auth.logout(request)
    return redirect('home')
 
+@login_required(login_url="/registration/login/")
 def new(request):
    if request.method == "POST":
        title = request.POST['title']
@@ -57,7 +59,7 @@ def new(request):
   
    return render(request, 'new.html')
 
-
+@login_required(login_url="/registration/login/")
 def detail(request, post_pk):
    post = Post.objects.get(pk=post_pk)
    
@@ -70,8 +72,6 @@ def detail(request, post_pk):
         return redirect('detail', post_pk);
 
    return render(request, 'detail.html', {'post':post})
-
-
 
 
 def edit(request, post_pk):
@@ -89,8 +89,6 @@ def edit(request, post_pk):
 
 
    return render(request, 'edit.html', {'post':post})
-
-
 
 
 def delete(request, post_pk):
