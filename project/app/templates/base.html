@@ -29,15 +29,19 @@
         <li class="navbar__menu__item">
           <a href="{% url 'home' %}">Home</a>
         </li>
+        {% if user.is_authenticated %}
+        <span class="navbar__menu__item">안녕, {{user.username}}</span>
         <li class="navbar__menu__item">
           <a href="{% url 'logout'%}">로그아웃</a>
         </li>
+        {% else %}
         <li class="navbar__menu__item">
           <a href="{% url 'login'%}">로그인</a>
         </li>
         <li class="navbar__menu__item">
           <a href="{% url 'signup'%}">회원가입</a>
         </li>
+        {% endif %}
       </ul>
     </nav>
     <div class="title">{% block title %} {% endblock title %}</div>
