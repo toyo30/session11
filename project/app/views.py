@@ -1,7 +1,17 @@
+from django.contrib.auth.models import User
 from django.shortcuts import redirect, render
 
 from .models import Comment, Post
 
+
+def signup(request):
+   if request.method == 'POST':
+       username = request.POST['username']
+       password = request.POST['password']
+       User.objects.create_user(name=username, password=password)
+       return redirect('home')
+       
+   return render(request, 'registration/signup.html')
 
 def home(request):
    posts = Post.objects.all()
