@@ -17,7 +17,7 @@
   </form>
   {% for comment in post.comments.all %}
   <li>
-    {{comment.content}}
+    <span>{{comment.content}}</span>
     <a href="{% url 'delete_comment' post.pk comment.pk %}">삭제</a>
   </li>
   {% endfor %}
