@@ -5,6 +5,7 @@
 <div class="detail-post_container">
   <div class="detail_title">제목: {{post.title}}</div>
   <div class="detail_content">내용: {{post.content}}</div>
+  <div class="detail_content">작성자: {{post.author.username}}</div>
   <div class="detail-post_btn">
     <a href="{% url 'home' %}">홈 화면</a>
     {% if user.is_authenticated and user.pk == post.author.pk %}
@@ -19,6 +20,7 @@
   {% for comment in post.comments.all %}
   <li>
     <span>{{comment.content}} </span>
+    <span>{{comment.author.username}} </span>
     {% if user.pk == comment.author.pk and user.is_authenticated %}
     <a href="{% url 'delete_comment' post.pk comment.pk %}">삭제</a>
     {% endif %}
